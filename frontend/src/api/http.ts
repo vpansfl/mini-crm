@@ -1,7 +1,10 @@
 import type { FieldError, ProblemDetail } from '../types/common.ts'
 
 // Spring Boot API 호출 공통 함수.
-// 모든 요청은 상대 경로(/api/...)로 보내고, 개발 환경에서는 Vite 프록시가 백엔드로 전달한다.
+// - 로컬: VITE_API_BASE_URL을 비워 두면 상대 경로(/api/...)로 요청하고 Vite 프록시가 백엔드로 전달한다.
+// - 배포: VITE_API_BASE_URL에 백엔드 주소(예: https://mini-crm-api.onrender.com)를 지정한다.
+// 프론트에는 비밀값(HubSpot 토큰 등)을 두지 않는다. VITE_ 변수는 번들에 그대로 포함되기 때문이다.
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/+$/, '')
 
 export class ApiError extends Error {
   readonly status: number
@@ -38,7 +41,7 @@ async function toApiError(response: Response): Promise<ApiError> {
 export async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let response: Response
   try {
-    response = await fetch(path, {
+    response = await fetch(`${API_BASE_URL}${path}`, {
       ...init,
       headers: { Accept: 'application/json', ...init?.headers },
     })

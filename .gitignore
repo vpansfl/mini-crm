@@ -14,11 +14,24 @@ desktop.ini
 .env.*
 !.env.example
 
+# Secret / certificate files (e.g. Aiven CA certificate, keystores)
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+secrets/
+
+# Deploy tool local state (Vercel / Render CLI)
+.vercel/
+.render/
+
 # Logs
 *.log
 
 # Node (frontend/ has its own .gitignore as well)
 node_modules/
+frontend/dist/
 
 # Backend (Spring Boot: Gradle / Maven)
 backend/build/

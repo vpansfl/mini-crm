@@ -1,0 +1,13 @@
+# Docker 빌드 컨텍스트에서 제외 (빌드 결과, IDE 파일, 비밀값 파일)
+.gradle/
+build/
+out/
+bin/
+.idea/
+*.iml
+.vscode/
+HELP.md
+prompt.md
+.env
+.env.*
+src/main/resources/application-local.*
